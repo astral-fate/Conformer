@@ -1,0 +1,87 @@
+% ICCV 2025 Paper Template
+
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%%%%%%%%% PAPER TYPE  - PLEASE UPDATE FOR FINAL VERSION
+%\usepackage{iccv}              % To produce the CAMERA-READY version
+\usepackage[review]{iccv}      % To produce the REVIEW version
+%\usepackage[pagenumbers]{iccv} % To force page numbers, e.g. for an arXiv version
+
+% Import additional packages in the preamble file, before hyperref
+\input{preamble}
+
+% It is strongly recommended to use hyperref, especially for the review version.
+% hyperref with option pagebackref eases the reviewers' job.
+\definecolor{iccvblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=iccvblue]{hyperref}
+
+
+% --- START: CUSTOM REVIEW LAYOUT (NUMBERS REMOVED) ---
+\makeatletter
+
+% %% 1. DISABLE LINE NUMBERS
+% The \nolinenumbers command from the lineno package turns off numbering.
+\nolinenumbers
+
+% %% 2. REMOVE DEFAULT REVIEW HEADER/BORDERS
+% This command clears the "CONFIDENTIAL REVIEW..." text from the header.
+\ClearShipoutPicture
+
+\makeatother
+% --- END: CUSTOM REVIEW LAYOUT ---
+
+
+%%%%%%%%% PAPER ID  - PLEASE UPDATE
+\def\paperID{*****} % *** Enter the Paper ID here
+\def\confName{ICCV}
+\def\confYear{2025}
+
+%%%%%%%%% TITLE - PLEASE UPDATE
+\title{\ \ CSLRConformer: A Data-Centric Conformer Approach for Continuous Arabic Sign Language Recognition on the Isharah Dataset}
+
+%%%%%%%%% AUTHORS - PLEASE UPDATE
+\author{Fatimah Mohamed Emad Elden\\
+Department of Computer ans Information Sciences, \\
+Faculty of Graduate Studies for Statistical Research, Cairo University\\
+{\tt\small 12422024441586@pg.cu.edu.eg}
+}
+
+% --- Language and Font Packages ---
+\usepackage{fontspec}    % Essential for using system fonts (like Amiri for Arabic)
+\usepackage{polyglossia} % For handling multiple languages, especially RTL like Arabic
+
+% --- Language and Font Setup ---
+\setmainlanguage{english}
+\setotherlanguage{arabic}
+% Make sure you have the "Amiri" font installed on your system
+\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+
+% --- Table Packages ---
+\usepackage{booktabs}    % For professional-looking tables (\toprule, \midrule, etc.)
+\usepackage{tabularx}    % For tables that fit column width and wrap text
+\usepackage{ragged2e}    % For \RaggedRight alignment in table cells
+\usepackage{array}       % For advanced column definitions in tables
+\usepackage{caption}     % For better control over captions
+\captionsetup[table]{position=bottom} % Places table captions at the bottom
+
+%-------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+\input{sec/0_abstract}
+\input{sec/1_intro}
+\input{sec/2_Background and Related Work}
+\input{sec/3_Methodology}
+\input{sec/4_Experimental Evaluation}
+\input{sec/5_Results_and_Analysis}
+\input{sec/6_Discussion}
+\input{sec/7_Conclusion and Future Work}
+\input{sec/8_References}
+
+{
+    \small
+    \bibliographystyle{ieeenat_fullname}
+    \bibliography{main}
+}
+
+\end{document}

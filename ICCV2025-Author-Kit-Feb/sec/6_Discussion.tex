@@ -1,0 +1,37 @@
+\section{Discussion}
+The experimental results provide compelling evidence for the efficacy of a data-centric approach to Continuous Sign Language Recognition (CSLR). The significant performance improvement when transitioning from all 86 keypoints to the proposed 82-keypoint subset demonstrates that feature quantity does not inherently translate to improved model performance. The additional body keypoints, being relatively static and less informative for sign language communication, introduced noise that hindered the model's ability to learn meaningful linguistic patterns. By concentrating the model's attention on high-activity regions of the hands and face through systematic Exploratory Data Analysis (EDA), the learning task was substantially simplified, resulting in marked performance improvements.
+
+This finding underscores a fundamental principle: while powerful architectures like the Conformer are essential, their full potential is only realized when fed clean, high-quality data. The analysis revealed that the test set contains zero Out-of-Vocabulary (OOV) words \cite{young1994detecting} relative to the combined training and development vocabularies, confirming that model recognition errors stem from handling novel sentence structures and co-articulation effects rather than encountering unknown glosses. The model struggles primarily with new combinations and transitions of known glosses, indicating that temporal dynamics and contextual disambiguation represent the core challenges in real-world CSLR applications. The relatively lower performance improvement on the test set (53.6\%) compared to development set (75.1\%) may be attributed to the signer-independent evaluation protocol, where unseen signers introduce additional variability in signing styles and patterns not encountered during training.
+
+\subsection{Comparison with Isharah Dataset Baselines}
+Table~\ref{tab:isharah_comparison} presents a comparison between the results achieved in this work and the benchmark results reported in the original Isharah dataset paper \cite{alyami2025isharahlargescalemultiscenedataset}. The CSLRConformer model demonstrates competitive performance, achieving 12.70\% WER on the test set compared to the best-performing baseline methods from the original study.
+
+\begin{table}[h]
+    \centering
+    \begin{tabularx}{\columnwidth}{>{\raggedright}X >{\Centering}X >{\Centering}X}
+        \toprule
+        \textbf{Method} & \textbf{Dev WER (\%)} & \textbf{Test WER (\%)} \\
+        \midrule
+        \multicolumn{3}{l}{\textit{Original Isharah Baselines:}} \\
+        VAC & 22.5 & 34.9 \\
+        SMKD & 23.1 & 39.0 \\
+        TLP & 23.3 & 31.4 \\
+        SEN & 23.2 & 32.4 \\
+        CorrNet & 23.1 & 31.2 \\
+        Swin-MSTP & 26.3 & 36.2 \\
+        SlowFastSign & 24.3 & 27.4 \\
+        \midrule
+        \multicolumn{3}{l}{\textit{This Work:}} \\
+        Data-Centric CSLRConformer & 5.60 & 12.70 \\
+        \midrule
+        \textbf{Best Baseline} & 22.5 & 27.4 \\
+        \textbf{Relative Improvement} & 75.1\% & 53.6\% \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Comparison of WER (\%) results between this work and original Isharah dataset baselines}
+    \label{tab:isharah_comparison}
+\end{table}
+
+The CSLRConformer model achieves substantial improvements over all baseline methods, with a relative WER reduction of 53.6\% compared to the best-performing baseline (SlowFastSign) on the test set. This significant improvement can be attributed to the systematic data-centric approach employed, which prioritizes feature quality and preprocessing over architectural complexity. The 5.60\% development WER represents a remarkable 75.1\% relative improvement over the best baseline development result.
+
+The comparative experiments collectively reinforce that for this dataset, optimizing data quality through careful EDA-driven feature engineering provides more significant performance gains than modifications to training strategies or architectural components alone. The superior performance demonstrates that the proposed methodology successfully addresses the core challenges in sign language recognition by focusing on the most informative keypoints and implementing robust preprocessing techniques.

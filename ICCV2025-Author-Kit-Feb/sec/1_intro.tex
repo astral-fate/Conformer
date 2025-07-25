@@ -1,0 +1,17 @@
+\section{Introduction}
+\label{sec:intro}
+Sign language serves as the primary communication language for over 70 million deaf individuals worldwide \cite{who2025deafness}, yet the scarcity of continuous sign language recognition (CSLR) datasets remains a critical bottleneck for developing new assistive technologies that bridge the communication gap between deaf and hearing communities. While Isolated Sign Language Recognition (ISLR) has achieved considerable progress \cite{Sarhan_2023_ICCV}, the field increasingly demands advancement toward Continuous Sign Language Recognition (CSLR), which transcribes complete sentences from uninterrupted signing sequences without explicit temporal segmentation.
+
+Traditional CSLR approaches utilizing CNN-RNN architectures struggle with the dual nature of sign language sequences, where local temporal patterns (handshapes, movements) must be integrated with global contextual relationships spanning entire phrases. Recent Transformer-based models \cite{vaswani2017attention} improve long-range dependencies but lack efficient local pattern modeling. This work introduces a novel hybrid approach leveraging the Conformer architecture \cite{gulati2020conformer}, originally designed for speech recognition, which synergistically combines convolutional layers for local dependency modeling with self-attention mechanisms for global sequence understanding—uniquely suited for CSLR's spatio-temporal complexity.
+
+The 1st Multimodal Sign Language Recognition (MSLR) Workshop Challenge at ICCV 2025 \cite{mslr2025} addresses developing robust CSLR systems through Task 1: Signer-Independent Recognition using the Isharah dataset \cite{alyami2025isharahlargescalemultiscenedataset}—a large-scale Arabic Sign Language corpus comprising approximately 14,000 videos from 18 signers performing 1,000 unique sentences. This work develops a comprehensive end-to-end CSLR recognition system. The primary contributions include:
+
+\begin{enumerate}
+   \item \textbf{Systematic Feature Engineering through Data-Driven Analysis}: A principled strategy guided by Exploratory Data Analysis (EDA) that quantitatively identifies communicative keypoints through movement displacement analysis, reducing the feature space from 86 to 82 semantically meaningful keypoints representing hands, lips, and eyes.
+   
+   \item \textbf{Robust Preprocessing Pipeline}: A comprehensive framework incorporating DBSCAN-based outlier detection \cite{deng2020dbscan}, frame-level spatial normalization, and dynamic feature extraction combining position, velocity, and acceleration representations.
+   
+   \item \textbf{Novel CSLRConformer Architecture}: First adaptation of Conformer for keypoint-based CSLR, employing a Macaron-Net-inspired sandwich structure with 8 Conformer blocks that uniquely addresses sign language's dual local-global temporal dependencies through hybrid CNN-attention modeling.
+   
+   \item \textbf{Comprehensive Empirical Validation}: Rigorous experimental validation achieving 5.60\% WER on development set and 12.70\% WER on test set, demonstrating substantial performance improvements of 75.1\% relative WER reduction on development set and 53.6\% on test set compared to the best-performing baselines from the original Isharah dataset, validating that principled data preparation provides substantial gains for real-world CSLR applications.
+\end{enumerate}

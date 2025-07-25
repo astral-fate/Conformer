@@ -1,0 +1,45 @@
+\section{Experimental Setup}
+\label{sec:experimental_setup}
+This section details the experimental configuration, evaluation metrics, and implementation specifics for validating the proposed CSLRConformer methodology.
+
+%-------------------------------------------------------------------------
+\subsection{Training Configuration}
+
+The CSLRConformer was implemented in PyTorch and trained on NVIDIA A100-SXM4-40GB GPU. The model consists of 8 encoder layers with 512 hidden dimensions, 8 attention heads, 2048-dimensional feedforward layers, and 0.3 dropout rate \cite{srivastava2014dropout}.
+
+Training used AdamW optimizer \cite{loshchilov2017decoupled} with learning rate $3 \times 10^{-4}$, weight decay $1 \times 10^{-2}$, and cosine annealing scheduler with 15-epoch warmup \cite{loshchilov2016sgdr}. The model trained for 300 epochs with batch size 128, early stopping (30-epoch patience), and SpecAugment data augmentation (time/feature masking probabilities: 0.08/0.2) \cite{park2019specaugment}.
+
+\subsection{Evaluation Metrics}
+
+\subsubsection{Word Error Rate (WER)}
+
+CSLR model performance is evaluated using Word Error Rate, derived from Levenshtein distance \cite{levenshtein1966binary}. WER measures edit operations (substitutions, deletions, insertions) required to transform predicted gloss sequences into ground-truth references according to Equation~\ref{eq:wer}:
+
+\begin{equation}
+WER = \frac{S+D+I}{N}
+\label{eq:wer}
+\end{equation}
+
+where $S$, $D$, $I$ represent substitutions, deletions, insertions respectively, and $N$ is the total reference words. The WER metric in Equation~\ref{eq:wer} is the standard evaluation measure for sequence recognition tasks \cite{morris2004and}, where lower WER indicates superior performance.
+
+\subsubsection{Connectionist Temporal Classification (CTC) Loss}
+
+The model employs CTC loss \cite{graves2006connectionist} for sequence-to-sequence learning without explicit alignment. CTC introduces blank tokens ($\epsilon$) and defines many-to-one mappings that collapse network output paths into target sequences. This approach is particularly suitable for sign language recognition where temporal alignment between input frames and output glosses is unknown \cite{pu2019iterative}.
+
+The probability of target sequence $Y$ given input $X$ marginalizes over all valid alignment paths $\pi$ as defined in Equation~\ref{eq:ctc_prob}:
+
+\begin{equation}
+p(Y \mid X) = \sum_{\pi \in B^{-1}(Y)} p(\pi \mid X)
+\label{eq:ctc_prob}
+\end{equation}
+
+where $B^{-1}(Y)$ represents all valid paths collapsing to $Y$. The path probability $p(\pi|X)$ is computed as the product of per-timestep probabilities using Equation~\ref{eq:ctc_path}:
+
+\begin{equation}
+p(\pi | X) = \prod_{t=1}^{T} p_{t}(\pi_{t} | X)
+\label{eq:ctc_path}
+\end{equation}
+
+The CTC formulation in Equations~\ref{eq:ctc_prob} and~\ref{eq:ctc_path} enables the model to learn optimal alignment between variable-length input sequences and target label sequences. CTC loss is the negative log-likelihood of Equation~\ref{eq:ctc_prob}, enabling end-to-end training without frame-level alignment annotations \cite{graves2006connectionist}. This approach has proven effective for various sequence recognition tasks including speech recognition \cite{gulati2020conformer} and sign language recognition \cite{pu2019iterative}.
+
+ 

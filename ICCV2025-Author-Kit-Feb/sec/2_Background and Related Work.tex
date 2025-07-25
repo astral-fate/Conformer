@@ -1,0 +1,25 @@
+\section{Background and Related Work}
+\label{sec:formatting}
+
+%-------------------------------------------------------------------------
+\subsection{The Landscape of Continuous Sign Language Recognition (CSLR)}
+
+The field of SLR has evolved from recognizing isolated signs (ISLR) to transcribing full sentences (CSLR), representing a substantial leap in complexity. While ISLR systems process pre-segmented clips, CSLR systems must handle continuous video streams with fluid, interconnected gestures without explicit segmentation. Early influential datasets like RWTH-PHOENIX-Weather-2014 (Phoenix2014-T) \cite{camgoz2018neural} advanced the field but were recorded in controlled environments with consistent backgrounds and limited signers.
+
+%-------------------------------------------------------------------------
+\subsection{Sequence Modeling for CSLR}
+ 
+Early CSLR approaches combined CNNs for spatial feature extraction with RNNs/LSTMs for temporal modeling \cite{huang2024video}. This work employs Conformer, a hybrid model from speech recognition \cite{gulati2020conformer}, uniquely suited for CSLR as it synergistically combines convolutional layers for local dependencies (handshapes, movements) with self-attention for global, long-range dependencies between signs \cite{camgoz2018neural}.
+
+Recent CSLR advancements show growing Conformer adoption. The ConSignformer model \cite{aloysius2024continuous} by Aloysius et al. first successfully adapted Conformer for vision-based tasks, achieving state-of-the-art performance through hybrid CNN-Conformer architecture. Subsequent work includes Efficient ConSignformer with Sign Query Attention (SQA) \cite{aloysius2025optimized} for reduced computational complexity. Conformer-based approaches excel at modeling sign language's dual nature: local temporal patterns (handshapes, movements) integrated with global contextual relationships spanning gestural phrases. Consistent superior performance across PHOENIX-2014 benchmarks \cite{camgoz2018neural} establishes this paradigm's potential for bridging speech and visual sequence modeling.
+
+%-------------------------------------------------------------------------
+\subsection{Arabic Sign Language Datasets}
+
+Arabic Sign Language (ArSL) datasets have evolved from basic alphabet collections like ArASL2018 \cite{latif2018arabic} and ASLAD-190K \cite{boulesnane2024aslad} to comprehensive multi-modal resources such as KArSL \cite{sidig2021karsl}, which provides synchronized RGB video, depth frames, and 3D skeleton data for 502 isolated signs. However, Continuous Sign Language Recognition remains limited, with ArabSign \cite{luqmanArabsign2023} containing only 9,335 video samples across 50 sentences as the primary public benchmark. Specialized corpora like mArSL \cite{electronics10141739} address non-manual characteristics through 6,748 samples requiring facial expressions for interpretation, while the Isharah dataset \cite{alyami2025isharahlargescalemultiscenedataset} provides large-scale real-world data across multiple scenarios. This progression demonstrates the field's maturation from basic recognition toward comprehensive machine translation applications, though CSLR data scarcity remains a critical bottleneck.
+
+%-------------------------------------------------------------------------
+\subsection{Isharah Dataset Description and Benchmark}
+
+The experiments conducted in this paper utilized the official dataset from the MSLR 2025 Workshop Challenge, a curated subset of the extensive Isharah corpus. The full Isharah dataset is a large-scale, multi-scene collection for Continuous Sign Language Recognition (CSLR), containing 30,000 video clips performed by 18 professional signers. The data provided by the challenge organizers consists of keypoint sequences in pickle (`.pkl`) files, with corresponding gloss annotations and sample IDs provided in separate `.csv` files. For the primary signer-independent track, the data is distributed into a training set with 10,000 labeled samples from 13 signers, a development set of 949 samples from one new signer, and a testing set comprising 3,800 samples from the final four unseen signers. This partitioning is explicitly designed to assess a model's ability to generalize to new individuals. For reference, the original Isharah paper established CSLR benchmarks where Swin-MSTP achieved 26.6\% WER, while CorrNet and TLP reported 31.9\% and 32.0\% respectively.
+
